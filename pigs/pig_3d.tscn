@@ -1,0 +1,78 @@
+[gd_scene load_steps=11 format=3 uid="uid://b0plk1v7rnyj7"]
+
+[ext_resource type="ArrayMesh" uid="uid://coovb0piikgr5" path="res://pigs/16433_Pig.obj" id="1_4c264"]
+[ext_resource type="Script" path="res://pigs/pig_3d.gd" id="1_thw6g"]
+[ext_resource type="Texture2D" uid="uid://c4khmli4jts8g" path="res://pigs/pig_skin_37_88_diffuse-708x708.jpg" id="2_mooir"]
+[ext_resource type="PackedScene" uid="uid://ud20s3hgaran" path="res://components/autonomy_component.tscn" id="5_bhkhj"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ydfe"]
+albedo_texture = ExtResource("2_mooir")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="SphereMesh" id="SphereMesh_j0clb"]
+radius = 0.08
+height = 0.16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7id5o"]
+albedo_color = Color(0, 0, 0, 1)
+emission_enabled = true
+emission = Color(0.513753, 2.10572e-07, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_minxp"]
+material = SubResource("StandardMaterial3D_7id5o")
+radius = 0.03
+height = 0.06
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vwenr"]
+radius = 0.405377
+height = 1.70468
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_sgdgs"]
+radius = 0.37916
+
+[node name="Pig3D" type="CharacterBody3D"]
+script = ExtResource("1_thw6g")
+
+[node name="PigBody" type="Node3D" parent="."]
+
+[node name="16433Pig" type="MeshInstance3D" parent="PigBody"]
+transform = Transform3D(-1, 8.74228e-08, 3.82137e-15, 0, -4.37114e-08, 1, 8.74228e-08, 1, 4.37114e-08, 1.32825, 0, -0.0987663)
+mesh = ExtResource("1_4c264")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_3ydfe")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PigBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.104219, 0.585168, -0.752)
+mesh = SubResource("SphereMesh_j0clb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="PigBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.13103, 0.585, -0.752)
+mesh = SubResource("SphereMesh_j0clb")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="PigBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.133026, 0.59489, -0.823)
+mesh = SubResource("SphereMesh_minxp")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="PigBody"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113617, 0.595, -0.823)
+mesh = SubResource("SphereMesh_minxp")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.419548, -0.108766)
+shape = SubResource("CapsuleShape3D_vwenr")
+
+[node name="AutonomyComponent" parent="." instance=ExtResource("5_bhkhj")]
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.537549, -0.782975)
+shape = SubResource("SphereShape3D_sgdgs")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

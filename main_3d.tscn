@@ -1,0 +1,140 @@
+[gd_scene load_steps=18 format=3 uid="uid://bg15yc5mai7vu"]
+
+[ext_resource type="Material" uid="uid://dla8qjy40fv7n" path="res://environment/moon_texture_basic.tres" id="1_cms63"]
+[ext_resource type="Script" path="res://main_3d.gd" id="1_s034b"]
+[ext_resource type="PackedScene" uid="uid://c1vkmp873ns0p" path="res://mushroom_character/player_3d.tscn" id="2_xix47"]
+[ext_resource type="Texture2D" uid="uid://bypc7sx5elc4u" path="res://environment/sky_texture.jpg" id="3_uxi50"]
+[ext_resource type="PackedScene" uid="uid://b0plk1v7rnyj7" path="res://pigs/pig_3d.tscn" id="5_0mxiq"]
+[ext_resource type="AudioStream" uid="uid://dyhmsgn5upj0" path="res://sounds/eerie_sound.mp3" id="6_fkk7x"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_8k0xd"]
+panorama = ExtResource("3_uxi50")
+
+[sub_resource type="Sky" id="Sky_mhd7j"]
+sky_material = SubResource("PanoramaSkyMaterial_8k0xd")
+
+[sub_resource type="Environment" id="Environment_jghxp"]
+background_mode = 2
+background_energy_multiplier = 0.25
+sky = SubResource("Sky_mhd7j")
+ambient_light_color = Color(0.0417582, 0.165833, 0.38137, 1)
+fog_enabled = true
+fog_mode = 1
+fog_light_energy = 0.25
+fog_sun_scatter = 1.0
+fog_density = 1.0
+fog_aerial_perspective = 0.5
+fog_height_density = 7.0
+fog_depth_curve = 1.03526
+fog_depth_begin = 1.0
+fog_depth_end = 10.0
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_1tcfk"]
+geometry_parsed_geometry_type = 1
+geometry_source_geometry_mode = 1
+geometry_source_group_name = &"ground"
+agent_height = 0.5
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_cfbl0"]
+lightmap_size_hint = Vector2i(5002, 5002)
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_m70g4"]
+data = PackedVector3Array(50, 0, 50, -50, 0, 50, 50, 0, -50, -50, 0, 50, -50, 0, -50, 50, 0, -50)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_npe4p"]
+size = Vector2(100, 4)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_swjud"]
+points = PackedVector3Array(-50, 0, -2, -50, 0, 2, 50, 0, -2, 50, 0, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_g01p7"]
+points = PackedVector3Array(-50, 0, -2, -50, 0, 2, 50, 0, -2, 50, 0, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ggia4"]
+points = PackedVector3Array(-50, 0, -2, -50, 0, 2, 50, 0, -2, 50, 0, 2)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_2igum"]
+points = PackedVector3Array(-50, 0, -2, -50, 0, 2, 50, 0, -2, 50, 0, 2)
+
+[node name="Main3D" type="Node3D"]
+script = ExtResource("1_s034b")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, 0, 1.54983, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jghxp")
+
+[node name="World" type="NavigationRegion3D" parent="." groups=["ground"]]
+navigation_mesh = SubResource("NavigationMesh_1tcfk")
+
+[node name="StaticObjects" type="Node3D" parent="World"]
+
+[node name="GroundPlane" type="StaticBody3D" parent="World"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="World/GroundPlane"]
+mesh = SubResource("PlaneMesh_cfbl0")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_cms63")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="World/GroundPlane"]
+shape = SubResource("ConcavePolygonShape3D_m70g4")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="World/GroundPlane"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2, 50)
+mesh = SubResource("PlaneMesh_npe4p")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_cms63")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="World/GroundPlane"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 2, 50)
+shape = SubResource("ConvexPolygonShape3D_swjud")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="World/GroundPlane"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, -50)
+mesh = SubResource("PlaneMesh_npe4p")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_cms63")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="World/GroundPlane"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, 50, 2, 0)
+shape = SubResource("ConvexPolygonShape3D_g01p7")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="World/GroundPlane"]
+transform = Transform3D(-4.37114e-08, 1, 4.37114e-08, 0, -4.37114e-08, 1, 1, 4.37114e-08, 1.91069e-15, -50, 2, 0)
+mesh = SubResource("PlaneMesh_npe4p")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_cms63")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="World/GroundPlane"]
+transform = Transform3D(-4.37114e-08, 1, -4.37114e-08, 0, -4.37114e-08, -1, -1, -4.37114e-08, 1.91069e-15, -50, 2, 0)
+shape = SubResource("ConvexPolygonShape3D_ggia4")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="World/GroundPlane"]
+transform = Transform3D(-4.37114e-08, -1, -4.37114e-08, 0, -4.37114e-08, 1, -1, 4.37114e-08, 1.91069e-15, 50, 2, 0)
+mesh = SubResource("PlaneMesh_npe4p")
+skeleton = NodePath("../..")
+surface_material_override/0 = ExtResource("1_cms63")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="World/GroundPlane"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 2, -50)
+shape = SubResource("ConvexPolygonShape3D_2igum")
+
+[node name="Player3D" parent="." instance=ExtResource("2_xix47")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.251819, 0)
+
+[node name="Pig3D" parent="." instance=ExtResource("5_0mxiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 31.6465, 0, 35.5698)
+
+[node name="Pig3D2" parent="." instance=ExtResource("5_0mxiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.19726, 0, 35.5698)
+
+[node name="Pig3D3" parent="." instance=ExtResource("5_0mxiq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.0764, 0, -31.0909)
+
+[node name="RandomScarySound" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("6_fkk7x")
+attenuation_model = 3
+volume_db = -18.925
+max_db = -5.0

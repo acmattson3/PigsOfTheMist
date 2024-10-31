@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3 uid="uid://ci3xslplqqqpj"]
+
+[ext_resource type="Script" path="res://mushroom_character/ui.gd" id="1_mka4x"]
+[ext_resource type="Texture2D" uid="uid://co54yest1dhrn" path="res://mushroom_character/white_line.png" id="1_pcq1l"]
+[ext_resource type="Texture2D" uid="uid://dm8lppvpngtqc" path="res://mushroom_character/Arrow.png" id="2_xkxet"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_02ful"]
+blend_mode = 2
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x8qqn"]
+texture = ExtResource("1_pcq1l")
+modulate_color = Color(0.682353, 0, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v2oyg"]
+texture = ExtResource("1_pcq1l")
+modulate_color = Color(0, 0.858824, 0, 1)
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_mka4x")
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 14.0
+offset_top = -39.0
+offset_right = 265.0
+offset_bottom = -16.0
+grow_vertical = 0
+
+[node name="GridContainer" type="GridContainer" parent="PanelContainer"]
+layout_mode = 2
+columns = 2
+
+[node name="MushroomsFoundLabel" type="Label" parent="PanelContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "Golden Mushrooms Obtained: "
+
+[node name="MushroomsFound" type="Label" parent="PanelContainer/GridContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="WhiteLine" type="Sprite2D" parent="."]
+position = Vector2(960, 40)
+scale = Vector2(3.98222, 10.5)
+texture = ExtResource("1_pcq1l")
+
+[node name="Arrow" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_02ful")
+position = Vector2(960, 36)
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_xkxet")
+
+[node name="Arrow2" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_02ful")
+position = Vector2(960, 36)
+scale = Vector2(0.0190402, 0.1)
+texture = ExtResource("2_xkxet")
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -678.0
+offset_top = -82.0
+offset_right = -36.0
+offset_bottom = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxTexture_x8qqn")
+theme_override_styles/fill = SubResource("StyleBoxTexture_v2oyg")
+value = 90.0
+show_percentage = false
+
+[node name="YouLoseLabel" type="Label" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 659.0
+offset_top = 400.0
+offset_right = -688.0
+offset_bottom = -505.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 128
+text = "You died!"

@@ -1,0 +1,102 @@
+[gd_scene load_steps=15 format=3 uid="uid://c1vkmp873ns0p"]
+
+[ext_resource type="Script" path="res://mushroom_character/player_3d.gd" id="1_5memr"]
+[ext_resource type="PackedScene" uid="uid://dyx8c2wqly6fc" path="res://components/movable_camera_3d.tscn" id="2_uxupi"]
+[ext_resource type="ArrayMesh" uid="uid://b4wsxpk5ypltg" path="res://objects/10192_MushroomShitake_v1-L3.obj" id="3_acv22"]
+[ext_resource type="Material" uid="uid://0ahicxsoi8yi" path="res://objects/mushroom_skin.tres" id="3_lrodj"]
+[ext_resource type="PackedScene" uid="uid://ci3xslplqqqpj" path="res://mushroom_character/ui.tscn" id="5_medwe"]
+[ext_resource type="PackedScene" uid="uid://bp3e1fmtya7gi" path="res://components/health_component.tscn" id="6_edak2"]
+[ext_resource type="AudioStream" uid="uid://0sfpgnifraiq" path="res://sounds/nighttime_forest_sounds.mp3" id="7_yxt4k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p4m62"]
+radius = 0.3
+height = 0.838534
+
+[sub_resource type="SphereMesh" id="SphereMesh_y01so"]
+radius = 0.2
+height = 0.4
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0u2yb"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_yo2an"]
+material = SubResource("StandardMaterial3D_0u2yb")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_47xw2"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_4qgty"]
+material = SubResource("StandardMaterial3D_47xw2")
+radius = 0.15
+height = 0.3
+
+[sub_resource type="TorusMesh" id="TorusMesh_ojpxa"]
+material = ExtResource("3_lrodj")
+inner_radius = 0.001
+outer_radius = 0.112
+
+[node name="Player3D" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_5memr")
+
+[node name="MovableCamera3D" parent="." instance=ExtResource("2_uxupi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.534014, 0)
+lock_horiz = true
+
+[node name="10192MushroomShitakeV1-l3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.00962748, -0.249815, -1.09197e-08, 0, -1.09278e-08, 0.25, -0.249815, -0.00962748, -4.20831e-10, 0, -0.0749205, 0)
+material_override = ExtResource("3_lrodj")
+mesh = ExtResource("3_acv22")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.393868, 0)
+shape = SubResource("CapsuleShape3D_p4m62")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.246996, 0.768839, -0.431047)
+mesh = SubResource("SphereMesh_y01so")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223035, 0.768839, -0.431047)
+mesh = SubResource("SphereMesh_y01so")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.223035, 0.856133, -0.622951)
+mesh = SubResource("SphereMesh_yo2an")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.261114, 0.856133, -0.622951)
+mesh = SubResource("SphereMesh_yo2an")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.253268, 0.856133, -0.414791)
+material_override = ExtResource("3_lrodj")
+mesh = SubResource("SphereMesh_4qgty")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.222357, 0.856133, -0.414791)
+material_override = ExtResource("3_lrodj")
+mesh = SubResource("SphereMesh_4qgty")
+
+[node name="MeshInstance3D7" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.00874639, 0.596287, -0.67065)
+mesh = SubResource("TorusMesh_ojpxa")
+
+[node name="UI" parent="." instance=ExtResource("5_medwe")]
+
+[node name="HealthComponent" parent="." instance=ExtResource("6_edak2")]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.351516, 0)
+stream = ExtResource("7_yxt4k")
+volume_db = -25.0
+autoplay = true
+parameters/looping = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.336305, 0)
+current = true
+
+[connection signal="just_died" from="HealthComponent" to="." method="_on_health_component_just_died"]
